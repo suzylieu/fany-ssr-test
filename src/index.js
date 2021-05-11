@@ -17,7 +17,7 @@ app.get("*", (req, res) => {
   const html = `
      <html>
        <head>
-       <title>fany ssr</title>
+       <title>飢餓三十聚樂邦報名</title>
        </head>
        <body>
          <div id="root">${content}</div>
@@ -38,8 +38,8 @@ app.post("/return", (req, res) => {
 
   const html = `
      <html>
-       <head>
-       <title>fany ssr</title>
+      <head>
+        <title>飢餓三十聚樂邦報名</title>
        </head>
        <body>
          <div id="root">${content}</div>

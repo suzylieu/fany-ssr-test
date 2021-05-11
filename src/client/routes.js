@@ -3,11 +3,11 @@ import ReturnPage from "./pages/ReturnPage";
 
 const routes = [
   {
-    path: '/hfPage',
+    path: '/clubon-ver32',
     component: ThirtyHF,
   },
   {
-    path: '/return',
+    path: '/clubon-return',
     component: ReturnPage,
   }
 ];
