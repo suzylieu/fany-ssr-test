@@ -1,8 +1,10 @@
-import React from "react";
-import ThirtyHF from "./pages/ThirtyHF";
+import { renderRoutes } from 'react-router-config';
+import routes from './routes';
 
 function App() {
-  return ( <ThirtyHF />);
+  return (
+    renderRoutes(routes)
+  );
 }
 
 export default App;

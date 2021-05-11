@@ -1,15 +1,20 @@
 import express from "express";
- import React from "react";
- import { renderToString } from "react-dom/server";
- import App from "./client/App";
+import React from "react";
+import { renderToString } from "react-dom/server";
+import { StaticRouter } from "react-router-dom";
+import App from "./client/App";
 
- const app = express();
+const app = express();
 
- app.use(express.static("public"));
- app.get("/", (req, res) => {
-   const content = renderToString(<App />);
+app.use(express.static("public"));
+app.get("*", (req, res) => {
+  const content = renderToString(
+    <StaticRouter location={req.path}>
+      <App />
+    </StaticRouter>
+  );
 
-   const html = `
+  const html = `
      <html>
        <head></head>
        <body>
@@ -19,9 +24,9 @@ import express from "express";
      </html>
    `;
 
-   res.send(html);
- });
+  res.send(html);
+});
 
- app.listen(3000, () => {
-   console.log("listening on port 3000");
- });
+app.listen(3000, () => {
+  console.log("listening on port 3000");
+});
