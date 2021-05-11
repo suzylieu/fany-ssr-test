@@ -1,7 +1,8 @@
-import Home from "./pages/Home/Home";
+import React from "react";
+import ThirtyHF from "./pages/ThirtyHF";
 
 function App() {
-  return ( <Home />);
+  return ( <ThirtyHF />);
 }
 
 export default App;

@@ -1,12 +1,12 @@
 import React from "react";
 
-const Home = () => {
+const ThirtyHF = () => {
   return (
     <div>
-      <div>Homepage12</div>
+      <div>ThirtyHFpage12</div>
       <button onClick={() => console.log("click me")}>click me</button>
     </div>
   );
 };
 
-export default Home;
+export default ThirtyHF;
