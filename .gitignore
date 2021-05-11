@@ -11,6 +11,9 @@
 /build
 /public
 
+# Distribution directories
+/dist
+
 # misc
 .DS_Store
 .env.local
