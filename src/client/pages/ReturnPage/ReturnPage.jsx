@@ -6,9 +6,7 @@ const ReturnPage = () => {
     <div>
       <div>ReturnPage12</div>
       <button onClick={() => console.log("hello")}>Hello</button>
-      <div>
-        <Link to="/hfPage">To HF page</Link>
-      </div>
+      <div>This is the return page</div>
     </div>
   );
 };
