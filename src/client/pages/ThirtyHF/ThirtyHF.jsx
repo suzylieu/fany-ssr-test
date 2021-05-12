@@ -132,7 +132,7 @@ const ThirtyHF = () => {
               <StepContent>
                 {index === 0 && <Step1Content control={control} errors={errors} watch={watch} setValue={setValue}/>}
                 {index === 1 && <Step2Content control={control} errors={errors} watch={watch} setValue={setValue}/>}
-                {index === 2 && <Step3Content />}
+                {index === 2 && <Step3Content control={control} getValues={getValues} />}
                 <Box mb={2}>
                   <Button
                     disabled={step === 0}
