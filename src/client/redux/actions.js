@@ -2,6 +2,7 @@ import apis from "./apis";
 
 export const FETCH_CAMP_LIST = "FETCH_CAMP_LIST";
 export const FETCH_RETURN = "FETCH_RETURN";
+export const FETCH_CAMP_VERIFY = "FETCH_CAMP_VERIFY";
 export const SET_STEP_NEXT = "SET_STEP_NEXT";
 export const SET_STEP_BACK = "SET_STEP_BACK";
 
@@ -11,6 +12,15 @@ export const fetachGetCampList = () => async (dispatch) => {
   dispatch({
     type: FETCH_CAMP_LIST,
     payload: res.data,
+  });
+};
+
+export const fetachPostCampVerify = (payload) => async (dispatch) => {
+  const res = await apis.fetchPostCampVerify(payload);
+
+  dispatch({
+    type: FETCH_CAMP_VERIFY,
+    payload: res.data.diy_status,
   });
 };
 

@@ -1,5 +1,6 @@
 import {
 	FETCH_CAMP_LIST,
+	FETCH_CAMP_VERIFY,
 	FETCH_RETURN,
 	SET_STEP_NEXT,
 	SET_STEP_BACK
@@ -8,7 +9,7 @@ import {
 const initialValues = {
 	step: 0,
 	camps: [],
-	return: ''
+	diyStatus: 0
 }
 
 const reducers = (state = initialValues, action) => {
@@ -17,6 +18,11 @@ const reducers = (state = initialValues, action) => {
 			return {
 				...state,
 				camps: action.payload,
+			};
+		case FETCH_CAMP_VERIFY:
+			return {
+				...state,
+				diyStatus: action.payload,
 			};
 		case FETCH_RETURN:
 			return {
