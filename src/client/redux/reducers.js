@@ -3,13 +3,15 @@ import {
 	FETCH_CAMP_VERIFY,
 	FETCH_RETURN,
 	SET_STEP_NEXT,
-	SET_STEP_BACK
+	SET_STEP_BACK,
+	SET_DIALOG_OPEN
 } from "./actions";
 
 const initialValues = {
 	step: 0,
 	camps: [],
-	diyStatus: 0
+	diyStatus: 0,
+	dialogOpen: false
 }
 
 const reducers = (state = initialValues, action) => {
@@ -38,6 +40,11 @@ const reducers = (state = initialValues, action) => {
 			return {
 				...state,
 				step: state.step - 1
+			}
+		case SET_DIALOG_OPEN:
+			return {
+				...state,
+				dialogOpen: action.payload
 			}
 		default:
 			return state;

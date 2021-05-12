@@ -211,10 +211,10 @@ const Step2Content = ({ control, errors, watch, setValue }) => {
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={4} lg={2}>
-          <FormControl required fullWidth={true} error={errors.diyStatus ? true : false} variant="outlined">
+          <FormControl required fullWidth={true} error={errors.diyType ? true : false} variant="outlined">
             <FormLabel>是否參與過DIY</FormLabel>
             <Controller
-              name="diyStatus"
+              name="diyType"
               control={control}
               rules={{ required: true }}
               render={
@@ -233,14 +233,14 @@ const Step2Content = ({ control, errors, watch, setValue }) => {
             />
           </FormControl>
         </Grid>
-        {watch('diyStatus') === 2 &&
+        {watch('diyType') === 2 &&
           <Grid item xs={12} sm={8} lg={5}>
             <FormControl required fullWidth={true} error={errors.diyInfo ? true : false} variant="outlined">
               <FormLabel>Search DIY Camp</FormLabel>
               <Controller
                 name="diyInfo"
                 control={control}
-                rules={{ required: watch('diyStatus') === 2 ? true : false }}
+                rules={{ required: watch('diyType') === 2 ? true : false }}
                 render={({ field }) => (
                   <Autocomplete
                     {...field}

@@ -5,6 +5,7 @@ export const FETCH_RETURN = "FETCH_RETURN";
 export const FETCH_CAMP_VERIFY = "FETCH_CAMP_VERIFY";
 export const SET_STEP_NEXT = "SET_STEP_NEXT";
 export const SET_STEP_BACK = "SET_STEP_BACK";
+export const SET_DIALOG_OPEN = "SET_DIALOG_OPEN";
 
 export const fetachGetCampList = () => async (dispatch) => {
   const res = await apis.fetachGetCampList();
@@ -44,3 +45,10 @@ export const setStepBack = (data) =>  {
     payload: data,
   };
 };
+
+export const setDialogOpen = (data) => {
+	return {
+		type: SET_DIALOG_OPEN,
+		payload: data,
+	}
+}

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from 'react-redux';
-import { fetachGetCampList, fetachPostCampVerify, setStepNext, setStepBack } from "../../redux/actions";
+import { fetachGetCampList, fetachPostCampVerify, setStepNext, setStepBack, setDialogOpen } from "../../redux/actions";
 
 import moment from 'moment';
 import md5 from 'md5';
@@ -20,6 +20,7 @@ import Alert from '@material-ui/lab/Alert';
 import Step1Content from './Step1Content';
 import Step2Content from './Step2Content';
 import Step3Content from './Step3Content';
+import ThirtyHFDialog from './ThirtyHFDialog';
 
 const useStyles = makeStyles(theme =>
   createStyles({
@@ -46,7 +47,7 @@ const defaultValues = {
   city: '台北市',
   area: '中正區',
   address: '',
-  diyStatus: '',
+  diyType: '',
   payment_method: '',
   diyInfo: null,
 }
@@ -72,7 +73,7 @@ const ThirtyHF = () => {
       name: getValues('name'),
       birth: moment(getValues('birthday')).format('YYYY-MM-DD'),
       email: getValues('email'),
-      diy_status: getValues('diyStatus').toString(),
+      diy_status: getValues('diyType').toString(),
       camp_name: getValues('diyInfo') ? getValues('diyInfo').Camp_Name : "",
       camp_number: getValues('diyInfo') ? getValues('diyInfo').Camp_Number : "",
     }
@@ -88,7 +89,7 @@ const ThirtyHF = () => {
       //       console.log("error");
       //     }
       //   });
-      // dispatch(setDialogOpen(true));
+      dispatch(setDialogOpen(true));
     }
   };
 
@@ -117,14 +118,14 @@ const ThirtyHF = () => {
       }
     }
     if (step === 1) {
-      if (errors.name || errors.gender || errors.birthday || errors.email || errors.emailCheck || errors.mobile || errors.city || errors.area || errors.address || errors.diyStatus || errors.diyInfo) {
+      if (errors.name || errors.gender || errors.birthday || errors.email || errors.emailCheck || errors.mobile || errors.city || errors.area || errors.address || errors.diyType || errors.diyInfo) {
         return step === 1
       }
     }
   };
 
   const renderBtn = () => {
-    if (step === 0 || (step === 1 && watch('diyStatus') === 0)) {
+    if (step === 0 || (step === 1 && watch('diyType') === 0)) {
       return (
         <Button
           variant="contained"
@@ -136,7 +137,7 @@ const ThirtyHF = () => {
         </Button>
       )
     }
-    if (step === 1 && watch('diyStatus') !== 0) {
+    if (step === 1 && watch('diyType') !== 0) {
       return (
         <Button variant="contained" color="primary" onClick={handleValid}>
           驗證報名資料
@@ -159,6 +160,7 @@ const ThirtyHF = () => {
 
   return (
     <>
+      <ThirtyHFDialog watch={watch} />
       <Box border={1} borderColor="#f37024" borderRadius={5} m={2} p={2}>
         <Typography color="primary">重要注意事項：</Typography>
         <Typography>1.《莎瑪》遊戲盒將於2021.07.15起按捐款順序依序出貨。</Typography>
