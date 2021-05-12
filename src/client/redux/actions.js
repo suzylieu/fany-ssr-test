@@ -1,60 +1,20 @@
-export const setStepNext = (data) => {
-	return {
-		type: 'SET_STEP_NEXT',
-		payload: {
-			data: data,
-		}
-	}
-}
+import apis from "./apis";
 
-export const setStepBack = (data) => {
-	return {
-		type: 'SET_STEP_BACK',
-		payload: {
-			data: data,
-		}
-	}
-}
+export const FETCH_CAMP_LIST = "FETCH_CAMP_LIST";
+export const FETCH_RETURN = "FETCH_RETURN";
 
-export const setDialogOpen = (open) => {
-	return {
-		type: 'SET_DIALOG_OPEN',
-		payload: {
-			open: open,
-		}
-	}
-}
+export const fetachGetCampList = () => async (dispatch) => {
+  const res = await apis.fetachGetCampList();
 
-export const setDiyStatus = (data) => {
-	return {
-		type: 'SET_DIY_STATUS',
-		payload: {
-			data: data,
-		}
-	}
-}
+  dispatch({
+    type: FETCH_CAMP_LIST,
+    payload: res.data,
+  });
+};
 
-export const setDiyId = (data) => {
-	return {
-		type: 'SET_DIY_ID',
-		payload: {
-			data: data,
-		}
-	}
-}
-
-export const setTotalPrice = (data) => {
-	return {
-		type: 'SET_TOTAL_PRICE',
-		payload: {
-			data: data,
-		}
-	}
-}
-
-export const SET_STEP_NEXT = setStepNext().type;
-export const SET_STEP_BACK = setStepBack().type;
-export const SET_DIALOG_OPEN = setDialogOpen().type;
-export const SET_DIY_STATUS = setDiyStatus().type;
-export const SET_DIY_ID = setDiyId().type;
-export const SET_TOTAL_PRICE = setTotalPrice().type;
+export const fetachReturn = (data) =>  {
+  dispatch({
+    type: FETCH_RETURN,
+    payload: data,
+  });
+};

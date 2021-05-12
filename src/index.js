@@ -3,7 +3,9 @@ import React from "react";
 import { renderToString } from "react-dom/server";
 import { StaticRouter } from "react-router-dom";
 import { renderRoutes } from 'react-router-config';
+import { Provider } from "react-redux";
 import routes from './client/routes';
+import store from './client/redux';
 
 const app = express();
 
@@ -13,9 +15,11 @@ app.use(express.urlencoded())
 
 app.get("*", (req, res) => {
   const content = renderToString(
-    <StaticRouter location={req.path}>
-      {renderRoutes(routes)}
-    </StaticRouter>
+    <Provider store={store}>
+      <StaticRouter location={req.path}>
+        {renderRoutes(routes)}
+      </StaticRouter>
+    </Provider>
   );
 
   const html = `
@@ -35,12 +39,16 @@ app.get("*", (req, res) => {
 
 app.post("/clubon-return", (req, res) => {
   console.log(req.body.json)
+
   const content = renderToString(
-    <StaticRouter location={req.path}>
-      {renderRoutes(routes)}
-    </StaticRouter>
+    <Provider store={store}>
+      <StaticRouter location={req.path}>
+        {renderRoutes(routes)}
+      </StaticRouter>
+    </Provider>
   );
 
+  res.send(req.body.json)
   const html = `
      <html>
       <head>
