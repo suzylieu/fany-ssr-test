@@ -22,15 +22,15 @@ export const fetachReturn = (data) =>  {
 };
 
 export const setStepNext = (data) =>  {
-  dispatch({
+  return{
     type: SET_STEP_NEXT,
     payload: data,
-  });
+  };
 };
 
 export const setStepBack = (data) =>  {
-  dispatch({
+  return{
     type: SET_STEP_BACK,
     payload: data,
-  });
+  };
 };

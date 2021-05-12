@@ -10,6 +10,7 @@ const initialValues = {
 	camps: [],
 	return: ''
 }
+
 const reducers = (state = initialValues, action) => {
 	switch (action.type) {
 		case FETCH_CAMP_LIST:

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from 'react-redux';
-import { fetachGetCampList } from "../../redux/actions";
+import { fetachGetCampList, setStepNext, setStepBack } from "../../redux/actions";
 
 import moment from 'moment';
 import md5 from 'md5';
@@ -53,9 +53,7 @@ const defaultValues = {
 const ThirtyHF = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const camps = useSelector(state => state.camps);
   const step = useSelector(state => state.step)
-  console.log(step)
 
   const { control, formState: { errors }, watch, setValue, trigger, getValues } = useForm({ mode: "onChange", defaultValues });
 
@@ -72,21 +70,55 @@ const ThirtyHF = () => {
 
   };
 
-  const handleBack = () => {
-    dispatch(setDiyStatus(0))
-    dispatch(setStepBack(step))
-  };
-
   const handleNext = async () => {
     if (step === 0) {
       dispatch(setStepNext(step));
     }
     else {
+      await trigger()
+      // if (Object.keys(errors).length === 0) {
+      // dispatch(setTotalPrice({ eventType: getValues('event_type'), teamSize: getValues('team_size'), eventCount: getValues('event_count') }))
       dispatch(setStepNext(step));
+      // }
     }
   };
 
+  const handleBack = () => {
+    dispatch(setStepBack(step))
+  };
+
   const renderBtn = () => {
+    if (step === 0 || (step === 1 && watch('diyStatus') === 0)) {
+      return (
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleNext}
+          className={classes.button}
+        >
+          下一步
+        </Button>
+      )
+    }
+    if (step === 1 && watch('diyStatus') !== 0) {
+      return (
+        <Button variant="contained" color="primary" onClick={handleValid}>
+          驗證報名資料
+        </Button>
+      )
+    }
+    if (step === 2) {
+      return (
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handlePost}
+          className={classes.button}
+        >
+          送出
+        </Button>
+      )
+    }
   };
 
   return (
@@ -99,7 +131,7 @@ const ThirtyHF = () => {
               <StepLabel {...labelProps}>{label}</StepLabel>
               <StepContent>
                 {index === 0 && <Step1Content control={control} errors={errors} watch={watch} setValue={setValue}/>}
-                {index === 1 && <Step2Content />}
+                {index === 1 && <Step2Content control={control} errors={errors} watch={watch} setValue={setValue}/>}
                 {index === 2 && <Step3Content />}
                 <Box mb={2}>
                   <Button
