@@ -2,15 +2,19 @@ import express from "express";
 import React from "react";
 import { renderToString } from "react-dom/server";
 import { StaticRouter } from "react-router-dom";
-import App from "./client/App";
+import { renderRoutes } from 'react-router-config';
+import routes from './client/routes';
 
 const app = express();
 
 app.use(express.static("public"));
+app.use(express.json());
+app.use(express.urlencoded())
+
 app.get("*", (req, res) => {
   const content = renderToString(
     <StaticRouter location={req.path}>
-      <App />
+      {renderRoutes(routes)}
     </StaticRouter>
   );
 
@@ -29,10 +33,11 @@ app.get("*", (req, res) => {
   res.send(html);
 });
 
-app.post("/return", (req, res) => {
+app.post("/clubon-return", (req, res) => {
+  console.log(req.body.json)
   const content = renderToString(
     <StaticRouter location={req.path}>
-      <App res={res} />
+      {renderRoutes(routes)}
     </StaticRouter>
   );
 
