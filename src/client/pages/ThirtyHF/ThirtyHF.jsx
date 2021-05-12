@@ -1,25 +1,119 @@
 import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { makeStyles, createStyles } from '@material-ui/core/styles';
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from 'react-redux';
 import { fetachGetCampList } from "../../redux/actions";
 
+import moment from 'moment';
+import md5 from 'md5';
+
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
+import StepContent from '@material-ui/core/StepContent';
+import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
+
+import Step1Content from './Step1Content';
+import Step2Content from './Step2Content';
+import Step3Content from './Step3Content';
+
+const useStyles = makeStyles(theme =>
+  createStyles({
+    button: {
+      marginTop: theme.spacing(1),
+      marginRight: theme.spacing(1),
+    }
+  }),
+);
+
+const stepsLabel = ['請選擇活動類型', '請填寫報名者資料', '請選擇付款方式'];
+
+const defaultValues = {
+  event_type: '',
+  event_venue: '',
+  event_time: '',
+  team_size: '',
+  event_count: '',
+  name: '',
+  gender: '',
+  email: '',
+  emailCheck: '',
+  mobile: '',
+  city: '台北市',
+  area: '中正區',
+  address: '',
+  diyStatus: '',
+  payment_method: '',
+  diyInfo: null,
+}
+
 const ThirtyHF = () => {
+  const classes = useStyles();
   const dispatch = useDispatch();
-  const camps = useSelector((state) => state.camps);
-  const state = useSelector(state => state);
-  console.log(state)
+  const camps = useSelector(state => state.camps);
+  const step = useSelector(state => state.step)
+console.log(step)
+
   useEffect(() => {
     dispatch(fetachGetCampList());
   }, []);
 
+
+  const handlePost = () => {
+    
+  }
+
+  const handleValid = () => {
+   
+  };
+
+  const handleBack = () => {
+    dispatch(setDiyStatus(0))
+    dispatch(setStepBack(step))
+  };
+
+  const handleNext = async () => {
+    if (step === 0) {
+      dispatch(setStepNext(step));
+    }
+    else {
+      dispatch(setStepNext(step));
+    }
+  };
+
+  const renderBtn = () => {
+  };
+
   return (
-    <form id="form" method="post" action="https://i-payment-test.worldvision.org.tw/API/Activity_cart.aspx">
-      <div  >
-        <ul>
-          {camps.map((el) => (
-            <li key={el.Camp_Number}>{el.Camp_Name} </li>
-          ))}
-        </ul>
-        <button type="submit">送出</button><br />
+    <form action="https://i-payment-test.worldvision.org.tw/API/Activity_Cart.aspx" method="post" id="form">
+        <Stepper activeStep={step} orientation="vertical">
+          {stepsLabel.map((label, index) => {
+            const labelProps = {};
+            return (
+              <Step key={label}>
+                <StepLabel {...labelProps}>{label}</StepLabel>
+                <StepContent>
+                  {index === 0 && <Step1Content/>}
+                  {index === 1 && <Step2Content/>}
+                  {index === 2 && <Step3Content/>}
+                  <Box mb={2}>
+                    <Button
+                      disabled={step === 0}
+                      onClick={handleBack}
+                      className={classes.button}
+                    >
+                      上一步
+                   </Button>
+                    {renderBtn()}
+                  </Box>
+                </StepContent>
+              </Step>
+            )
+          })}
+        </Stepper>
         <input type="text" name="lang" id="lang" value="tw" /> <br />
         <input type="text" name="tag" id="tag" value="11" /> <br />
         <input type="text" name="pkey" id="pkey" value="20210507100414" /><br />
@@ -49,9 +143,8 @@ const ThirtyHF = () => {
         <input type="text" name="SourceURL" id="SourceURL" value="https://m-test.worldvision.org.tw/shopPost.aspx" /><br />
         <input type="text" name="code" id="code" value="02C77535EC30EE8B8E9916945D341B1A" /><br />
         <input type="text" name="receipt" id="receipt" value="3" /><br />
-        <input type="text" name="receipt_name" id="receipt_name" value="fany測試" /><br />
-      </div>
-    </form>
+        <input type="text" name="receipt_name" id="receipt_name" value="fany測試" />
+      </form>
   );
 };
 

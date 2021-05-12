@@ -6,6 +6,7 @@ import { renderRoutes } from 'react-router-config';
 import { Provider } from "react-redux";
 import routes from './client/routes';
 import store from './client/redux';
+import ReturnPage from './client/pages/ReturnPage'
 
 const app = express();
 
@@ -37,18 +38,17 @@ app.get("*", (req, res) => {
   res.send(html);
 });
 
-app.post("/clubon-return", (req, res) => {
-  console.log(req.body.json)
 
+app.post("/clubon-return", (req, res) => {
+  const data = req.body.json;
   const content = renderToString(
     <Provider store={store}>
-      <StaticRouter location={req.path}>
-        {renderRoutes(routes)}
+      <StaticRouter location={req.path} >
+        <ReturnPage data={data}/>
       </StaticRouter>
     </Provider>
   );
 
-  res.send(req.body.json)
   const html = `
      <html>
       <head>

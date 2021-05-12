@@ -1,6 +1,12 @@
-import { FETCH_CAMP_LIST, FETCH_RETURN } from "./actions";
+import {
+	FETCH_CAMP_LIST,
+	FETCH_RETURN,
+	SET_STEP_NEXT,
+	SET_STEP_BACK
+} from "./actions";
 
 const initialValues = {
+	step: 0,
 	camps: [],
 	return: ''
 }
@@ -16,6 +22,16 @@ const reducers = (state = initialValues, action) => {
 				...state,
 				return: action.payload,
 			};
+		case SET_STEP_NEXT:
+			return {
+				...state,
+				step: state.step + 1
+			}
+		case SET_STEP_BACK:
+			return {
+				...state,
+				step: state.step - 1
+			}
 		default:
 			return state;
 	}
